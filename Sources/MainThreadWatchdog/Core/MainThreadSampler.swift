@@ -1,3 +1,13 @@
+//
+//  MainThreadSampler.swift
+//  MainThreadWatchdog
+//
+//  Reads the main thread's call stack from another thread: suspend it, read its registers, walk
+//  the frame-pointer chain, resume.
+//
+//  Created by David Sherlock on 9/5/26.
+//
+
 import Foundation
 import Darwin
 

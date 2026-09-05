@@ -1,3 +1,12 @@
+//
+//  MainThreadWatchdogTests.swift
+//  MainThreadWatchdogTests
+//
+//  Burns CPU on the calling thread for `seconds`; never inlined so the sampled stack names it.
+//
+//  Created by David Sherlock on 9/5/26.
+//
+
 import XCTest
 @testable import MainThreadWatchdog
 

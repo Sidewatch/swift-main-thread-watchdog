@@ -1,3 +1,16 @@
+//
+//  MainThreadWatchdog.swift
+//  MainThreadWatchdog
+//
+//  Pings the main queue from its own thread every 100 ms; when a ping goes unanswered for
+//  ``threshold`` it writes a stall record to ``StallLog``: how long, which ``MainActivity``
+//  bracket was open, the host's standing ``MainActivity/context``, and the main thread's STACK
+//  at that moment (and again two seconds on, if it is still there) — so a stall names its
+//  function, not just the operation that happened to be running.
+//
+//  Created by David Sherlock on 9/5/26.
+//
+
 import Foundation
 
 /// Pings the main queue from its own thread every 100 ms; when a ping goes unanswered for

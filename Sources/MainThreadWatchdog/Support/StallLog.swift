@@ -1,3 +1,12 @@
+//
+//  StallLog.swift
+//  MainThreadWatchdog
+//
+//  Append-only log of stalls and slow brackets, written off the caller's thread.
+//
+//  Created by David Sherlock on 9/5/26.
+//
+
 import Foundation
 
 /// Append-only log of stalls and slow brackets, written off the caller's thread. An app

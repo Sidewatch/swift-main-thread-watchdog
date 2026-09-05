@@ -1,3 +1,12 @@
+//
+//  MainActivity.swift
+//  MainThreadWatchdog
+//
+//  A named bracket around main-thread work.
+//
+//  Created by David Sherlock on 9/5/26.
+//
+
 import Foundation
 
 /// A named bracket around main-thread work. Nesting keeps the OUTERMOST name current, so a
