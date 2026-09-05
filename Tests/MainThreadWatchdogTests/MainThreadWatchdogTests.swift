@@ -18,6 +18,8 @@ import XCTest
     return acc.isNaN ? 0 : Int(seconds * 1000)
 }
 
+/// Tests for `MainActivity`: the outermost bracket is the snapshot, nesting keeps its name, and
+/// it clears when done.
 final class MainActivityTests: XCTestCase {
     func testOutermostBracketIsTheSnapshotAndItClears() {
         XCTAssertEqual(MainActivity.snapshot, "no marker")
@@ -39,6 +41,7 @@ final class MainActivityTests: XCTestCase {
     }
 }
 
+/// Tests for `StallLog`: timestamped lines land in the configured file after a flush.
 final class StallLogTests: XCTestCase {
     func testWritesTimestampedLinesToTheConfiguredFile() throws {
         let url = FileManager.default.temporaryDirectory.appendingPathComponent("stall-\(UUID().uuidString).log")
