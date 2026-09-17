@@ -16,6 +16,7 @@ The beach ball, as evidence: a watchdog thread that logs every main-thread stall
 - The sampler must not allocate between `thread_suspend` and `thread_resume`: the main thread may hold the malloc lock.
 - The watchdog decides on elapsed time, not on the timeout firing (kernel timer leeway hid stalls otherwise).
 - The watchdog thread is `.userInitiated`, not `.utility`, for the same reason.
+- **Auditing? Read `AUDIT.md` first** — what the last full audit checked and fixed, and the known non-issues to skip; extend it, do not redo it.
 
 ## Rules
 
