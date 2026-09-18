@@ -20,6 +20,13 @@ dead-code and risk-pattern scans, docs drift); line-by-line logic review was tar
 - Build: clean. Tests: green.
 - Nothing to fix in this package.
 
+## Logic review — 18 Sep 2026 (every source and test file, line by line)
+
+Nothing to fix. Checked: the ping thread runs at `.userInitiated` and decides on ELAPSED time, not on
+the timeout firing; `MainThreadSampler` allocates nothing between `thread_suspend` and
+`thread_resume` (`dladdr` and demangling run after); `MainActivity` brackets nest and a stall reports
+the OUTERMOST name; `StallLog` appends on its own serial queue.
+
 ## Known non-issues (do not "fix" these again)
 
 - `CLAUDE.md` says NEVER in capitals in its rules; the module-map checker flags it as a type name — ignore.
@@ -27,3 +34,4 @@ dead-code and risk-pattern scans, docs drift); line-by-line logic review was tar
 ## History
 
 - 17 Sep 2026 — full audit (app + all 20 libraries), Claude with David.
+- 18 Sep 2026 — logic review (every source and test file, line by line), Claude with David.
