@@ -99,4 +99,11 @@ final class WatchdogTests: XCTestCase {
         RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.5))
         XCTAssertEqual(logText().split(separator: "\n").count, before, "the log is only stalls")
     }
+
+    func testThresholdComesFromTheEnvironmentOrDefaults() {
+        XCTAssertEqual(MainThreadWatchdog.threshold(from: [:]), 0.25)
+        XCTAssertEqual(MainThreadWatchdog.threshold(from: ["MAIN_THREAD_WATCHDOG_THRESHOLD_MS": "80"]), 0.08)
+        XCTAssertEqual(MainThreadWatchdog.threshold(from: ["MAIN_THREAD_WATCHDOG_THRESHOLD_MS": "0"]), 0.25, "zero is not a threshold")
+        XCTAssertEqual(MainThreadWatchdog.threshold(from: ["MAIN_THREAD_WATCHDOG_THRESHOLD_MS": "fast"]), 0.25)
+    }
 }

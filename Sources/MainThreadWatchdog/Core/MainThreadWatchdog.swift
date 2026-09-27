@@ -20,8 +20,16 @@ import Foundation
 /// STACK at that moment (and again two seconds on, if it is still there) — so a stall names
 /// its function. One wake-up per 100 ms at `.userInitiated` costs nothing measurable.
 public enum MainThreadWatchdog {
-    /// A ping unanswered this long is a stall worth writing down.
-    public static let threshold: TimeInterval = 0.25
+    /// A ping unanswered this long is a stall worth writing down: 250 ms, or the milliseconds in
+    /// `MAIN_THREAD_WATCHDOG_THRESHOLD_MS` — lowered to find what a shorter freeze is doing.
+    public static let threshold: TimeInterval = threshold(from: ProcessInfo.processInfo.environment)
+
+    /// The threshold an environment sets: its `MAIN_THREAD_WATCHDOG_THRESHOLD_MS` when that is a
+    /// positive number, else 250 ms.
+    public static func threshold(from environment: [String: String]) -> TimeInterval {
+        guard let ms = environment["MAIN_THREAD_WATCHDOG_THRESHOLD_MS"].flatMap(Double.init), ms > 0 else { return 0.25 }
+        return ms / 1000
+    }
     nonisolated(unsafe) private static var started = false
 
     /// Starts the watchdog thread. Call once, on the main thread, after ``StallLog/configure(directoryName:environmentVariable:)``.
