@@ -36,7 +36,9 @@ final class MainActivityTests: XCTestCase {
     func testContextIsReadableFromAnotherThread() {
         MainActivity.context = "Str.php 6,396 lines"
         let e = expectation(description: "read off-main")
-        Thread { XCTAssertEqual(MainActivity.context, "Str.php 6,396 lines"); e.fulfill() }.start()
+        Thread {
+            XCTAssertEqual(MainActivity.context, "Str.php 6,396 lines"); e.fulfill()
+        }.start()
         wait(for: [e], timeout: 2)
         MainActivity.context = ""
     }
@@ -64,7 +66,7 @@ final class WatchdogTests: XCTestCase {
     override class func setUp() {
         StallLog.configure(url: log)
         MainThreadWatchdog.start()
-        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.3))   // let the first pings land
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.3))  // let the first pings land
     }
 
     private func logText() -> String {
@@ -75,7 +77,7 @@ final class WatchdogTests: XCTestCase {
     func testABlockedMainThreadIsLoggedWithTheOuterBracketAndItsStack() {
         let outer = MainActivity.enter("probe block outer")
         let inner = MainActivity.enter("probe block inner")
-        _ = watchdogProbeBlock(MainThreadWatchdog.threshold + 0.2)   // the main thread stops answering
+        _ = watchdogProbeBlock(MainThreadWatchdog.threshold + 0.2)  // the main thread stops answering
         inner.done(); outer.done()
         // The watchdog samples, waits for main, symbolicates, THEN writes: poll rather than sleep.
         var log = ""
@@ -85,11 +87,14 @@ final class WatchdogTests: XCTestCase {
             log = logText()
         } while !log.contains("stall ") && Date() < until
         let lines = log.split(separator: "\n").map(String.init)
-        XCTAssertTrue(lines.contains { $0.contains("stall") && $0.hasSuffix("during: probe block outer") }, "names the OUTERMOST bracket\n\(log)")
+        XCTAssertTrue(
+            lines.contains { $0.contains("stall") && $0.hasSuffix("during: probe block outer") }, "names the OUTERMOST bracket\n\(log)")
         XCTAssertFalse(lines.contains { $0.contains("during: probe block inner") }, "the nested bracket never replaces the outer name")
-        XCTAssertTrue(lines.contains { $0.contains("slow") && $0.hasSuffix("probe block outer") }, "a slow bracket is logged with its own duration")
+        XCTAssertTrue(
+            lines.contains { $0.contains("slow") && $0.hasSuffix("probe block outer") }, "a slow bracket is logged with its own duration")
         XCTAssertTrue(lines.contains { $0.contains("main thread at +") }, "a stall carries the main thread's stack")
-        XCTAssertTrue(lines.contains { $0.contains("watchdogProbeBlock") }, "the sampled stack names the function the main thread was inside\n\(log)")
+        XCTAssertTrue(
+            lines.contains { $0.contains("watchdogProbeBlock") }, "the sampled stack names the function the main thread was inside\n\(log)")
         XCTAssertEqual(MainActivity.snapshot, "no marker")
     }
 

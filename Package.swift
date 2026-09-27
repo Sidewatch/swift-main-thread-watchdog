@@ -5,7 +5,7 @@ let package = Package(
     name: "MainThreadWatchdog",
     platforms: [.macOS(.v14)],
     products: [
-        .library(name: "MainThreadWatchdog", targets: ["MainThreadWatchdog"]),
+        .library(name: "MainThreadWatchdog", targets: ["MainThreadWatchdog"])
     ],
     targets: [
         .target(name: "MainThreadWatchdog", swiftSettings: [.swiftLanguageMode(.v6)]),

@@ -45,7 +45,11 @@ public enum MainThreadWatchdog {
                 DispatchQueue.main.async { answered.signal() }
                 let outcome = answered.wait(timeout: .now() + threshold)
                 let waited = Date().timeIntervalSince(sent)
-                if trace { fputs("watchdog ping \(sent.timeIntervalSinceReferenceDate) -> \(outcome == .timedOut ? "TIMEOUT" : "ok") after \(Int(waited * 1000)) ms\n", stderr) }
+                if trace {
+                    fputs(
+                        "watchdog ping \(sent.timeIntervalSinceReferenceDate) -> \(outcome == .timedOut ? "TIMEOUT" : "ok") after \(Int(waited * 1000)) ms\n",
+                        stderr)
+                }
                 // Decide on ELAPSED time, not on the timeout firing: the kernel gives timers
                 // leeway, and a wait that wakes late finds the main thread already answered.
                 // That is still a stall; it just went unsampled.
