@@ -2,7 +2,7 @@
 
 The beach ball, as evidence. A watchdog thread pings the main queue every 100 ms; when a ping goes unanswered for 250 ms it writes a stall record: how long, which named operation was running, what the app was showing, and the main thread's stack at that moment (and two seconds later if it is still stuck). An app that never stalls never writes a byte.
 
-Built for Sidewatch after three headless floods cleared the obvious suspect and the real stalls turned out to be somewhere nobody had guessed. Every stall a user feels is the main thread not answering; this writes down what it was doing so the next one can be fixed instead of theorised about.
+Every stall a user feels is the main thread not answering; this writes down what it was doing so the next one can be fixed instead of theorised about.
 
 ## Features
 

@@ -22,7 +22,9 @@ public enum MainActivity {
 
     /// The open bracket. Call ``done()`` on the same thread that entered it.
     public struct Token {
+        /// What the bracket was opened as.
         public let name: String
+        /// When it was opened.
         public let start: Date
         /// Closes the bracket; logs it if it was slow.
         public func done() {

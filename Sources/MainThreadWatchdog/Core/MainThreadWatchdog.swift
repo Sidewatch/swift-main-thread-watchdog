@@ -18,11 +18,7 @@ import Foundation
 /// ``threshold`` it writes a stall record to ``StallLog``: how long, which ``MainActivity``
 /// bracket was open, the host's standing ``MainActivity/context``, and the main thread's
 /// STACK at that moment (and again two seconds on, if it is still there) — so a stall names
-/// its function, not just the operation that happened to be running.
-///
-/// The beach ball, as evidence: every stall a user feels is the main thread not answering,
-/// and this writes down what it was doing so the next one can be fixed rather than
-/// theorised about. One wake-up per 100 ms at `.userInitiated` costs nothing measurable.
+/// its function. One wake-up per 100 ms at `.userInitiated` costs nothing measurable.
 public enum MainThreadWatchdog {
     /// A ping unanswered this long is a stall worth writing down.
     public static let threshold: TimeInterval = 0.25
@@ -72,9 +68,8 @@ public enum MainThreadWatchdog {
             }
         }
         thread.name = "main-thread-watchdog"
-        // NOT .utility: utility timers get ~50–100 ms of kernel leeway, so a 250 ms wait woke
-        // at ~300 ms — after a 450 ms block had already been answered — and a self-test missed
-        // the stall three runs in ten.
+        // Must not be .utility: utility timers get ~50–100 ms of kernel leeway, so a 250 ms wait
+        // wakes at ~300 ms, after a shorter block has already been answered, and misses it.
         thread.qualityOfService = .userInitiated
         thread.start()
     }
