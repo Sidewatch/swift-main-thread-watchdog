@@ -5,6 +5,7 @@
 //  Append-only log of stalls and slow brackets, written off the caller's thread.
 //
 //  Created by David Sherlock on 9/5/26.
+//  Copyright © 2026 ArrayPress Limited. MIT licence.
 //
 
 import Foundation
