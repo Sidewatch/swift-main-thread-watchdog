@@ -6,12 +6,12 @@ Every stall a user feels is the main thread not answering; this writes down what
 
 ## Features
 
-- 🐕 **Watchdog** — `MainThreadWatchdog.start()` on the main thread; decides on elapsed time, not on the timer firing, so kernel timer leeway cannot hide a stall
-- 🏷️ **Named brackets** — `let t = MainActivity.enter("disk changes 1,240"); … t.done()`; nesting keeps the OUTERMOST name, and any bracket over 100 ms is logged on its own
-- 🧭 **Standing context** — `MainActivity.context = "Str.php 6,396 lines wrap on"`; carried on every record
-- 🧵 **Stack sampler** — `MainThreadSampler.sample()` suspends the main thread, walks its frame pointers without allocating, resumes, then symbolicates with Swift names demangled (arm64)
-- 📝 **Stall log** — `~/Library/Logs/<YourApp>/stalls.log`, written off the caller's thread; an environment variable can redirect it for harnesses
-- 🪶 **Zero dependencies** — Foundation and Darwin only
+- **Watchdog** — `MainThreadWatchdog.start()` on the main thread; decides on elapsed time, not on the timer firing, so kernel timer leeway cannot hide a stall
+- **Named brackets** — `let t = MainActivity.enter("disk changes 1,240"); … t.done()`; nesting keeps the OUTERMOST name, and any bracket over 100 ms is logged on its own
+- **Standing context** — `MainActivity.context = "Str.php 6,396 lines wrap on"`; carried on every record
+- **Stack sampler** — `MainThreadSampler.sample()` suspends the main thread, walks its frame pointers without allocating, resumes, then symbolicates with Swift names demangled (arm64)
+- **Stall log** — `~/Library/Logs/<YourApp>/stalls.log`, written off the caller's thread; an environment variable can redirect it for harnesses
+- **Zero dependencies** — Foundation and Darwin only
 
 ## Requirements
 
